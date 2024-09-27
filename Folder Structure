@@ -1,0 +1,17 @@
+Financial_Data_Analysis_Project/
+│
+├── data/
+│   └── financial_data.csv             # CSV file containing financial data
+│
+├── notebooks/
+│   └── financial_analysis.ipynb        # Jupyter Notebook for data analysis
+│
+├── scripts/
+│   └── data_processing.py              # Python script for data loading and processing
+│
+├── reports/
+│   └── insights_summary.md              # Markdown file for insights and recommendations
+│
+├── README.md                           # Project overview and instructions
+├── LICENSE                             # License file (e.g., MIT)
+└── .gitignore                          # Files and directories to ignore in Git
