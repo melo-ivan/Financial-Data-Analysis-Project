@@ -1,0 +1,81 @@
+Data Processing Script
+Create a script (data_processing.py) for data loading and initial processing:
+
+import pandas as pd
+import gdown
+
+def load_data(url, output):
+    gdown.download(url, output, quiet=False)
+    df = pd.read_csv(output)
+    return df
+
+if __name__ == "__main__":
+    url = 'https://drive.google.com/uc?id=1Tpf1XE96zBTh0AHK-4Rd3FwONY2Yf2T0'
+    output = 'data/financial_data.csv'
+    df = load_data(url, output)
+    print(df.head())
+Jupyter Notebook for Analysis
+Use the following code in your Jupyter Notebook (financial_analysis.ipynb) for exploratory analysis:
+import pandas as pd
+import plotly.graph_objects as go
+import plotly.express as px
+
+# Load data
+df = pd.read_csv('data/financial_data.csv')
+
+# Convert 'Date' to datetime format
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Exploratory Data Analysis
+# Visualize temporal trends
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=df['Date'], y=df['Open'], mode='lines', name='Open'))
+fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close'))
+fig.add_trace(go.Scatter(x=df['Date'], y=df['High'], mode='lines', name='High'))
+fig.add_trace(go.Scatter(x=df['Date'], y=df['Low'], mode='lines', name='Low'))
+fig.update_layout(title='Temporal Trends in Prices',
+                  xaxis_title='Date',
+                  yaxis_title='Price',
+                  legend=dict(x=0, y=1, traceorder='normal'))
+fig.show()
+
+# Analyze trading volume
+fig_volume = go.Figure(data=[go.Scatter(x=df['Date'], y=df['Volume'], mode='lines', name='Volume')])
+fig_volume.update_layout(title='Trading Volume Over Time',
+                         xaxis_title='Date',
+                         yaxis_title='Volume')
+fig_volume.show()
+
+# 3D plot of Open, Close, and Volume
+fig_3d = px.scatter_3d(df, x='Open', y='Close', z='Volume', color='Date', title='3D Scatter Plot: Open vs Close vs Volume')
+fig_3d.show()
+
+# Summary statistics
+summary_table = df.describe().transpose()
+summary_table.reset_index(inplace=True)
+summary_table.rename(columns={'index': 'Variable'}, inplace=True)
+summary_table = summary_table.round(2)
+print(summary_table)
+
+Insights and Recommendations
+After analyzing the data, document your findings in reports/insights_summary.md. Here’s a template for that document:
+
+# Insights and Recommendations
+
+## Temporal Trends
+- **Significant Price Movements**: Identify periods of major price increase/decrease.
+- **Events Correlation**: Correlate significant price changes with known economic events.
+
+## Volume Analysis
+- **Trading Volume Peaks**: Analyze whether trading volume spikes align with significant economic events or news.
+
+## Volatility
+- **Risk Management**: Highlight periods of high volatility that could impact risk management strategies.
+
+
+Final Steps
+Ensure all code is functional and produces the expected results.
+Test your scripts and notebooks to confirm the entire flow works as intended.
+Update the year and your name in the LICENSE file.
+Add any additional documentation or comments as necessary.
+This structured approach will help you create a comprehensive financial data analysis project with clear documentation and insights. If you need any further assistance or specific details on any section, feel free to ask!
